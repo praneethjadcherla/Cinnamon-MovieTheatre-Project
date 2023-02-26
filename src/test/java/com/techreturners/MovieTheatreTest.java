@@ -3,6 +3,8 @@ package com.techreturners;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieTheatreTest {
@@ -58,6 +60,29 @@ public class MovieTheatreTest {
             movieTheatre.createAllSeatsAvailable();
 
             assertThrows(Exception.class,() -> movieTheatre.requestTickets(16));
+      }
+
+      @Test
+      public void checkIfTheatreIsFilledWithRandomSeats() throws Exception {
+            MovieTheatre movieTheatre=new MovieTheatre();
+            Random random=new Random();
+
+            int numberOfAvailableSeats=15;
+            int numberOfSeats=0;
+            movieTheatre.createAllSeatsAvailable();
+            for(int i=0;numberOfSeats<=numberOfAvailableSeats;i++) {
+                  try {
+                        numberOfSeats = random.nextInt(1, 4);
+                        movieTheatre.requestTickets(numberOfSeats);
+                        numberOfAvailableSeats = movieTheatre.availableSeats.size();
+                        System.out.println(numberOfAvailableSeats);
+                  }
+                  catch(Exception exception){
+                        assertThrows(Exception.class,() -> movieTheatre.requestTickets(3));
+                  }
+            }
+
+
       }
 
 
