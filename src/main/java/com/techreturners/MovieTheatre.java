@@ -21,4 +21,12 @@ public class MovieTheatre {
         }
         return availableSeats.size();
     }
+
+    public int requestTickets(int numberOfSeats){
+        for (int i = 0; i < numberOfSeats; i++) {
+            allocatedSeats.add(availableSeats.get(0));
+            availableSeats.remove(0);
+        }
+        return allocatedSeats.size();
+    }
 }
