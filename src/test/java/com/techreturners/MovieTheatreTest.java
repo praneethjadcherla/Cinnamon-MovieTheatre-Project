@@ -1,9 +1,9 @@
 package com.techreturners;
 
-
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieTheatreTest {
       @Test
@@ -21,7 +21,7 @@ public class MovieTheatreTest {
       }
 
       @Test
-      public void checkOneTicketRequested(){
+      public void checkOneTicketRequested() throws Exception{
             MovieTheatre movieTheatre=new MovieTheatre();
 
             movieTheatre.createAllSeatsAvailable();
@@ -29,16 +29,36 @@ public class MovieTheatreTest {
             assertEquals(1,movieTheatre.requestTickets(1));
             assertEquals(14,movieTheatre.availableSeats.size());
       }
-      //Creating movieTheatre object outside the method to access it directly to allocate seats sequentially
-      MovieTheatre movieTheatre=new MovieTheatre();
       @Test
-      public void checkThreeTicketsRequested(){
+      public void checkThreeTicketsRequested() throws Exception{
+            MovieTheatre movieTheatre=new MovieTheatre();
             movieTheatre.createAllSeatsAvailable();
 
             int seatsAllocated=3;
             int seatsAvailable=12;
 
             assertEquals(seatsAllocated,movieTheatre.requestTickets(3));
-            assertEquals(seatsAvailable,movieTheatre.availableSeats.size());
+            assertEquals(seatsAllocated,movieTheatre.allocatedSeats.size());
       }
+
+      @Test
+      public void checkA1IsAllocated() throws Exception{
+            MovieTheatre movieTheatre=new MovieTheatre();
+
+            movieTheatre.createAllSeatsAvailable();
+            movieTheatre.requestTickets(1);
+
+            assertTrue(movieTheatre.allocatedSeats.contains("A1"));
+      }
+
+      @Test
+      public void checkInvalidNumberOfSeatsRequested() throws Exception{
+            MovieTheatre movieTheatre=new MovieTheatre();
+
+            movieTheatre.createAllSeatsAvailable();
+
+            assertThrows(Exception.class,() -> movieTheatre.requestTickets(16));
+      }
+
+
 }
